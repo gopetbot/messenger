@@ -16,6 +16,6 @@ func main() {
 		Handler: handlers.PetProject,
 	})
 
-    server.NewClt(mux, "8080").Start()
+	server.NewClt(mux, "8080").Start()
 
 }

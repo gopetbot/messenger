@@ -12,8 +12,8 @@ type Simple struct {
 }
 
 func (s *Simple) Start() {
-	fmt.Println("Create a simple server!!! Port: ",s.svr.Addr)
-	if err := s.svr.ListenAndServe(); err != nil{
+	fmt.Println("Create a simple server!!! Port: ", s.svr.Addr)
+	if err := s.svr.ListenAndServe(); err != nil {
 		fmt.Println(err.Error())
 	}
 }
@@ -24,7 +24,7 @@ func NewClt(handler *handlers.Router, addr string) *Simple {
 		svr: &http.Server{
 			Addr:              addr,
 			Handler:           handler.Mux,
-			ReadTimeout:       600* time.Second,
+			ReadTimeout:       600 * time.Second,
 			ReadHeaderTimeout: 600 * time.Second,
 		},
 	}

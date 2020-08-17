@@ -19,5 +19,3 @@ func PetProject(w http.ResponseWriter, r *http.Request) {
 	log.Println("Salvado e abençoando")
 	w.WriteHeader(http.StatusOK)
 }
-
-
