@@ -1,8 +1,8 @@
 package server
 
 import (
-	"fmt"
-	"github.com/idasilva/messenger/handlers"
+	"github.com/gopetbot/messenger/handlers"
+	"log"
 	"net/http"
 	"time"
 )
@@ -12,9 +12,9 @@ type Simple struct {
 }
 
 func (s *Simple) Start() {
-	fmt.Println("Create a simple server!!! Port: ", s.svr.Addr)
+	log.Println("Create a simple server!!! Port: ", s.svr.Addr)
 	if err := s.svr.ListenAndServe(); err != nil {
-		fmt.Println(err.Error())
+		log.Println(err.Error())
 	}
 }
 

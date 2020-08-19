@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/idasilva/messenger/handlers"
-	"github.com/idasilva/messenger/server"
+	"github.com/gopetbot/messenger/handlers"
+	"github.com/gopetbot/messenger/server"
 	"net/http"
 )
 

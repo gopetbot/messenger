@@ -1,4 +1,4 @@
-module github.com/idasilva/messenger
+module github.com/gopetbot/messenger
 
 go 1.13
 
