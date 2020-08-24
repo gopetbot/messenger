@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 )
 
@@ -12,10 +11,4 @@ type Context struct {
 	Method  string
 	Path    string
 	Handler Handler
-}
-
-//PetProject contains a new handler
-func PetProject(w http.ResponseWriter, r *http.Request) {
-	log.Println("Salvado e abençoando")
-	w.WriteHeader(http.StatusOK)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gopetbot/messenger/handlers"
+	"github.com/gopetbot/messenger/pkg"
 	"github.com/gopetbot/messenger/server"
 	"net/http"
 )
@@ -13,7 +14,7 @@ func main() {
 		Name:    "Pet",
 		Method:  http.MethodGet,
 		Path:    "/hello/pet/project",
-		Handler: handlers.PetProject,
+		Handler: pkg.PetProject,
 	})
 
 	server.NewClt(mux, "8080").Start()
