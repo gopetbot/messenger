@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gopetbot/messenger/middleware"
 	"github.com/gopetbot/messenger/server"
@@ -17,6 +18,7 @@ func main() {
 		Handler: middleware.PetProjectHandler,
 	})
 
-	server.NewClt(mux, "0.0.0.0", "8080").Start()
+	port := os.Getenv("PORT")
+	server.NewClt(mux, "0.0.0.0", port).Start()
 
 }

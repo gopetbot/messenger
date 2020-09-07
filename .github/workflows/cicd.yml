@@ -1,0 +1,36 @@
+name: Build, Push and Deploy
+on: [push]
+jobs:
+  build_publish_deploy:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_REGISTRY_MESSENGER: registry.heroku.com/go-pet-messenger/web
+      HEROKU_REGISTRY: registry.heroku.com
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v1  
+      - name: Build
+        run: |
+          export VERSION=$(cat VERSION)
+          docker build -t $HEROKU_REGISTRY_MESSENGER:${VERSION} .
+      - name: Push
+        run: |
+          export VERSION=$(cat VERSION)
+          echo ${{ secrets.HEROKU_API_KEY }}  | docker login $HEROKU_REGISTRY --username ${{ secrets.HEROKU_EMAIL }}  --password-stdin
+          docker push $HEROKU_REGISTRY_MESSENGER:${VERSION}
+      - name: Deploy
+        run: |          
+          export VERSION=$(cat VERSION)
+          IMAGE_ID=$(docker inspect $HEROKU_REGISTRY_MESSENGER:${VERSION} --format={{.Id}})
+          curl -X PATCH https://api.heroku.com/apps/go-pet-messenger/formation \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer ${{ secrets.HEROKU_API_KEY }}" \
+          -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+          -d "{
+            \"updates\": [
+              {
+                \"type\": \"web\",
+                \"docker_image\": \"$IMAGE_ID\"
+              }
+            ] }"
