@@ -1,4 +1,4 @@
-package pkg
+package webhook
 
 import (
 	"encoding/json"
@@ -7,11 +7,12 @@ import (
 	"net/http"
 )
 
-//PetProject contains a new handler
-func PetProject(w http.ResponseWriter, r *http.Request) {
-	log.Println("Salvado e abençoando")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"hello": "world"}`))
+type Facebook struct {
+	Name string
+}
+
+func (f Facebook) HandleMessage(message string) (string, error) {
+	return "handled for facebook", nil
 }
 
 type intent struct {
@@ -39,6 +40,10 @@ type webhookRequest struct {
 	Session     string      `json:"session"`
 	ResponseID  string      `json:"responseId"`
 	QueryResult queryResult `json:"queryResult"`
+}
+
+func handleError(w http.ResponseWriter, err error) error {
+	return err
 }
 
 // webhookResponse is used to marshal a WebhookResponse JSON object. Note that
@@ -78,14 +83,8 @@ func getAgentName(request webhookRequest) (webhookResponse, error) {
 	return response, nil
 }
 
-// handleError handles internal errors.
-func handleError(w http.ResponseWriter, err error) {
-	w.WriteHeader(http.StatusInternalServerError)
-	fmt.Fprintf(w, "ERROR: %v", err)
-}
-
-// HandleWebhookRequest handles WebhookRequest and sends the WebhookResponse.
-func HandleWebhookRequest(w http.ResponseWriter, r *http.Request) {
+// DialogFlowHandler handles WebhookRequest and sends the WebhookResponse.
+func DialogFlowHandler(w http.ResponseWriter, r *http.Request) {
 	var request webhookRequest
 	var response webhookResponse
 	var err error

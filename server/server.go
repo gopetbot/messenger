@@ -1,10 +1,12 @@
 package server
 
 import (
-	"github.com/gopetbot/messenger/handlers"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gopetbot/messenger/middleware"
 )
 
 type Simple struct {
@@ -19,10 +21,10 @@ func (s *Simple) Start() {
 }
 
 //New create a new instance of the server to http request and response
-func NewClt(handler *handlers.Router, addr string) *Simple {
+func NewClt(handler *middleware.Router, host string, port string) *Simple {
 	return &Simple{
 		svr: &http.Server{
-			Addr:              addr,
+			Addr:              fmt.Sprintf("%v:%v", host, port),
 			Handler:           handler.Mux,
 			ReadTimeout:       600 * time.Second,
 			ReadHeaderTimeout: 600 * time.Second,
