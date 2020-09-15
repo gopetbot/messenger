@@ -14,9 +14,7 @@ Primeiramente, a ideia é ter sempre uma branch central de dev para onde as nova
 
 ![](.gitbook/assets/image%20%284%29.png)
 
-{% hint style="info" %}
-O fato de ter uma branch "central" não limita de forma alguma o nosso desenvolvimento: as branchs de cada nova feature podem conversar entre si também, caso seja necessário.
-{% endhint %}
+_O fato de ter uma branch "central" não limita de forma alguma o nosso desenvolvimento: as branchs de cada nova feature podem conversar entre si também, caso seja necessário._
 
 ### `Branches` Principais:
 
@@ -54,9 +52,7 @@ $ git commit -a -m "Bumped version number to 1.2"
 
 A nova branch criada deve existir por um tempo, até que a release seja lançada definitivamente. Enquanto isso, correções de bugs podem ser aplicadas aqui \(em vez de na `develop`branch\).
 
-{% hint style="warning" %}
-Adicionar grandes novas funcionalidades em uma release branch é estritamente proibido. Elas devem ser mergeadas para a`develop`e aguardar o próximo grande lançamento.
-{% endhint %}
+_Adicionar grandes novas funcionalidades em uma release branch é estritamente proibido. Elas devem ser mergeadas para a`develop`e aguardar o próximo grande lançamento._
 
 **Concluindo uma release branch:**
 
@@ -93,9 +89,7 @@ Deleted branch release-1.2 (was ff452fe).
 
 **As feature branches** são usadas para desenvolver novas funcionalidades para a próxima release ou para um futuro distante. A essência de uma feature branch é que ela existe **enquanto a feature** está em desenvolvimento, mas eventualmente será mergeado de volta na `develop`\(para adicionar definitivamente o novo recurso à próxima versão\) ou descartado.
 
-{% hint style="info" %}
-Feature branches geralmente existem apenas em repositórios de desenvolvedores, não na `origin`
-{% endhint %}
+_Feature branches geralmente existem apenas em repositórios de desenvolvedores, não na `origin`_
 
 **Criando uma feature branch:**
 
@@ -125,9 +119,7 @@ $ git push origin develop
 
 **As hotfix branches** são muito parecidas com as release branches, pois também se destinam a preparar uma nova release de produção, só que não planejado. Elas surgem da necessidade de agir imediatamente sobre um estado indesejado de uma versão que já está em produção. Quando um bug crítico em uma versão de produção deve ser resolvido imediatamente, um branch de hotfix pode ser ramificado a partir da tag correspondente no branch master que marca a versão de produção.
 
-{% hint style="info" %}
-A essência é que o trabalho da equipe pode continuar, enquanto outra pessoa está preparando uma solução rápida de produção.
-{% endhint %}
+_A essência é que o trabalho da equipe pode continuar, enquanto outra pessoa está preparando uma solução rápida de produção._
 
 ![](.gitbook/assets/image.png)
 
@@ -178,7 +170,5 @@ $ git branch -d hotfix-1.2.1
 Deleted branch hotfix-1.2.1 (was abbe5d6).
 ```
 
-{% hint style="info" %}
-Para utilizar comandos mais enxutos: [https://github.com/nvie/gitflow](https://github.com/nvie/gitflow)
-{% endhint %}
+_Para utilizar comandos mais enxutos: [https://github.com/nvie/gitflow](https://github.com/nvie/gitflow)_
 
