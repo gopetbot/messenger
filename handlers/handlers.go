@@ -1,31 +1,12 @@
-package middleware
+package handlers
 
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gopetbot/messenger/factory"
 	"io/ioutil"
 	"net/http"
-
-	"github.com/gopetbot/messenger/middleware/webhook"
 )
-
-type Response struct {
-	Message string `json:"message"`
-}
-
-type DialogFlowRequest struct {
-	OriginalRequest OriginalRequest `json:"originalRequest"`
-}
-
-type OriginalRequest struct {
-	Source string `json:"source"`
-}
-
-func handleResponse(w http.ResponseWriter, message string, httpCode int) {
-	response, _ := json.Marshal(Response{Message: message})
-	w.WriteHeader(httpCode)
-	w.Write([]byte(string(response)))
-}
 
 //PetProjectHandler contains a new handler
 func PetProjectHandler(w http.ResponseWriter, r *http.Request) {
@@ -41,8 +22,8 @@ func PetProjectHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	platform, exists := webhook.Platforms[s.OriginalRequest.Source]
-	if !exists {
+	platform, err := factory.SamplePlatform(s.OriginalRequest.Source)
+	if err == nil {
 
 		message := fmt.Sprintf("Platform %v does not exist!", s.OriginalRequest.Source)
 		handleResponse(w, message, http.StatusNotFound)
@@ -53,4 +34,11 @@ func PetProjectHandler(w http.ResponseWriter, r *http.Request) {
 		handleResponse(w, message, http.StatusInternalServerError)
 	}
 	handleResponse(w, message, http.StatusOK)
+}
+
+
+func handleResponse(w http.ResponseWriter, message string, httpCode int) {
+	response, _ := json.Marshal(Response{Message: message})
+	w.WriteHeader(httpCode)
+	w.Write([]byte(string(response)))
 }
