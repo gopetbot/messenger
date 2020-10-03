@@ -3,17 +3,16 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/gopetbot/messenger/handlers"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/gopetbot/messenger/middleware"
 )
 
 func TestGetFacebookWebhook(t *testing.T) {
 
-	requestPayload := &middleware.DialogFlowRequest{
-		middleware.OriginalRequest{
+	requestPayload := &handlers.DialogFlowRequest{
+		handlers.OriginalRequest{
 			Source: "facebook",
 		},
 	}
@@ -24,7 +23,7 @@ func TestGetFacebookWebhook(t *testing.T) {
 		t.Fatal(err)
 	}
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(middleware.PetProjectHandler)
+	handler := http.HandlerFunc(handlers.PetProjectHandler)
 	handler.ServeHTTP(rr, req)
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
