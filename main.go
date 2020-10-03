@@ -1,22 +1,22 @@
 package main
 
 import (
-	"github.com/gopetbot/messenger/handlers"
-	"github.com/gopetbot/messenger/pkg"
-	"github.com/gopetbot/messenger/server"
 	"net/http"
+
+	"github.com/gopetbot/messenger/middleware"
+	"github.com/gopetbot/messenger/server"
 )
 
 func main() {
 
-	mux := handlers.NewRouterInstance()
-	mux.AddRoute(&handlers.Context{
+	mux := middleware.NewRouterInstance("/v1")
+	mux.AddRoute(&middleware.Context{
 		Name:    "Pet",
-		Method:  http.MethodGet,
-		Path:    "/hello/pet/project",
-		Handler: pkg.PetProject,
+		Method:  http.MethodPost,
+		Path:    "/pet/webhook",
+		Handler: middleware.PetProjectHandler,
 	})
 
-	server.NewClt(mux, "8080").Start()
+	server.NewClt(mux, "0.0.0.0", "8080").Start()
 
 }
